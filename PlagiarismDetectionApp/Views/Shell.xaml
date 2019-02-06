@@ -4,20 +4,26 @@
                         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                          xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                          xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
                          mc:Ignorable="d"
                          xmlns:prism="http://prismlibrary.com/"
                       prism:ViewModelLocator.AutoWireViewModel="True"
         Title="Plagiarism Detection" Width="1200" Height="750" Name="ShellWindow" WindowStartupLocation="CenterScreen">
-    <StackPanel Width="1200" Height="750" Orientation="Vertical" Background="LightGray">
-        <TabControl>
-            <TabItem Name="Home" Header="Home" Background="LightGray">
-                <StackPanel Height="750">
-                    <ContentControl prism:RegionManager.RegionName="LeftRegion" />
-                    <TextBlock Text="{Binding Text}"></TextBlock>
-                </StackPanel>
-            </TabItem>
-            <TabItem Name="Other" Header="Other"  Background="LightGray">Other</TabItem>
-        </TabControl>
-    </StackPanel>
+    <DockPanel>
+        <materialDesign:ColorZone Padding="16" materialDesign:ShadowAssist.ShadowDepth="Depth2" Mode="PrimaryMid" DockPanel.Dock="Top" Height="64">
+            <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="22">PlagiCheck</TextBlock>
+        </materialDesign:ColorZone>
+        <StackPanel Width="1200" Height="750" Orientation="Vertical" Background="LightGray">
+            <TabControl>
+                <TabItem Name="Home" Header="Home" Background="LightGray">
+                    <StackPanel Height="750">
+                        <ContentControl prism:RegionManager.RegionName="LeftRegion" />
+                        <TextBlock Text="{Binding Text}"></TextBlock>
+                    </StackPanel>
+                </TabItem>
+                <TabItem Name="Other" Header="Other"  Background="LightGray">Other</TabItem>
+            </TabControl>
+        </StackPanel>
+    </DockPanel>
 </Window>
 
