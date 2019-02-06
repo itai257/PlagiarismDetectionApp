@@ -1,16 +1,15 @@
-﻿<Controls:MetroWindow x:Class="PlagiarismDetectionApp.Views.Shell"
+﻿<Window x:Class="PlagiarismDetectionApp.Views.Shell"
                          Icon="/Resources/icon.png"
                         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                          xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                          xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                          mc:Ignorable="d"
-                         xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
                          xmlns:prism="http://prismlibrary.com/"
                       prism:ViewModelLocator.AutoWireViewModel="True"
         Title="Plagiarism Detection" Width="1200" Height="750" Name="ShellWindow" WindowStartupLocation="CenterScreen">
     <StackPanel Width="1200" Height="750" Orientation="Vertical" Background="LightGray">
-        <TabControl Controls:TabControlHelper.IsUnderlined="True">
+        <TabControl>
             <TabItem Name="Home" Header="Home" Background="LightGray">
                 <StackPanel Height="750">
                     <ContentControl prism:RegionManager.RegionName="LeftRegion" />
@@ -20,5 +19,5 @@
             <TabItem Name="Other" Header="Other"  Background="LightGray">Other</TabItem>
         </TabControl>
     </StackPanel>
-</Controls:MetroWindow>
+</Window>
 
