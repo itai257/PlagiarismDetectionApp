@@ -14,84 +14,14 @@
         <materialDesign:ColorZone Padding="16" materialDesign:ShadowAssist.ShadowDepth="Depth2" Mode="PrimaryMid" DockPanel.Dock="Top" Height="100">
             <StackPanel>
                 <Grid>
-            <Image Height="50" Width="50" HorizontalAlignment="Left" Source="/PlagiarismDetectionApp;component/Resources/icon.png"/>
-                <TextBlock HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="35" Margin="60,10"><Run Text="PlagiCheck"/></TextBlock>
+                    <Image Height="50" Width="50" HorizontalAlignment="Left" Source="/PlagiarismDetectionApp;component/Resources/icon.png"/>
+                    <TextBlock HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="35" Margin="60,10"><Run Text="PlagiCheck"/></TextBlock>
                 </Grid>
             </StackPanel>
         </materialDesign:ColorZone>
-        <StackPanel Width="1000" Height="519" Orientation="Vertical" VerticalAlignment="Top">
-            <TextBlock HorizontalAlignment="Center"  Style="{StaticResource MaterialDesignDisplay1TextBlock}" TextWrapping="Wrap" Margin="0,20" TextAlignment="Center">Just uplod curpos and detect plagiarism</TextBlock>
-            <Grid HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20,5">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="700"/>
-                    <ColumnDefinition Width="Auto"/>
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="100"/>
-                </Grid.RowDefinitions>
-                <Grid Grid.Column="0" Grid.Row="0">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                    </Grid.RowDefinitions>
-                    <materialDesign:PackIcon Kind="Folder" Foreground="{Binding ElementName=NameTextBox, Path=BorderBrush}" Margin="2 10 4 0" VerticalAlignment="Center"/>
-                    <TextBox Text="{Binding CorpusPath, Mode=TwoWay}"
-                     Grid.Row="0"
-                         Margin="20,30"
-                     materialDesign:HintAssist.Hint="Corpus Folder Path"
-                     ToolTip="Corpus Folder Path"
-                     materialDesign:HintAssist.IsFloating="True">
-                        <i:Interaction.Triggers>
-                            <i:EventTrigger EventName="PreviewMouseLeftButtonDown">
-                                <!--<i:InvokeCommandAction Command="{Binding TextFieldFocusedCommand}"/>-->
-                            </i:EventTrigger>
-                        </i:Interaction.Triggers>
-                    </TextBox>
-                    <!-- Row 1 left grid-->
-                    <StackPanel Grid.ColumnSpan="2" Grid.Row="1" Orientation="Horizontal" Margin="10 32 0 0">
-                        <TextBlock Style="{StaticResource MaterialDesignTitleTextBlock}" Foreground="DarkBlue">Select N-Gram Size</TextBlock>
-                        <TextBox  HorizontalAlignment="Left" Width="100" Margin="16 0 0 0" materialDesign:HintAssist.Hint=" Default: 4" ToolTip="N-Gram Size">
 
-                        </TextBox>
-                    </StackPanel>
-                    <!-- Row 1 left grid-->
-                    <StackPanel Grid.ColumnSpan="2" Grid.Row="2" Orientation="Horizontal" Margin="10 32 0 0">
-                        <TextBlock Style="{StaticResource MaterialDesignTitleTextBlock}" Foreground="DarkBlue">Select Chunk size for text segments</TextBlock>
-                        <TextBox  HorizontalAlignment="Left" Width="120" Margin="16 0 0 0" materialDesign:HintAssist.Hint=" Default: 4000" ToolTip="Chunk Size">
-
-                        </TextBox>
-                    </StackPanel>
-                </Grid>
-
-                <materialDesign:Card Grid.Column="1" Width="210" Height="224" Grid.ColumnSpan="2" Margin="20" Grid.Row="0">
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="*"/>
-                        </Grid.RowDefinitions>
-                        <TextBlock Grid.Row="0" Style="{StaticResource MaterialDesignTitleTextBlock}" Margin="0 8 0 0" HorizontalAlignment="Center" Foreground="DarkBlue">Explenation</TextBlock>
-                        <TextBlock Grid.Row="1"
-                                   VerticalAlignment="Center"
-                                   HorizontalAlignment="Center"
-                                   TextWrapping="Wrap"
-                                   Text="Bla Bla Bla Bla Bla BlaBla Bla Bla Bla Bla BlaBla Bla Bla Bla Bla BlaBla Bla Bla Bla Bla BlaBla Bla Bla Bla Bla Bla"
-                                   ></TextBlock>
-                    </Grid>
-                </materialDesign:Card>
-            </Grid>
-            <Grid Grid.Row="1">
-                <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="*"/>
-                    </Grid.RowDefinitions>
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                    <Button Command="{Binding SaveConfigurationCommand}" Style="{StaticResource MaterialDesignRaisedButton}" Width="250" Margin="0 8 0 8">   Find Plagiarism!    </Button>
-                    </StackPanel>
-                <materialDesign:Snackbar Grid.Row="1" MessageQueue="{Binding MessageQueue}"/>
-            </Grid>
-        </StackPanel>
+        <ContentControl prism:RegionManager.RegionName="MainRegion"></ContentControl>
+        
     </DockPanel>
 </Window>
 

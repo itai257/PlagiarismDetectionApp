@@ -1,6 +1,4 @@
-﻿using Microsoft.Practices.Prism.Regions;
-using Microsoft.Practices.ServiceLocation;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -18,11 +16,11 @@ using System.Windows.Shapes;
 namespace PlagiarismDetectionApp.Views
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for ResultsWindowView.xaml
     /// </summary>
-    public partial class Shell
+    public partial class ResultsWindowView : UserControl
     {
-        public Shell()
+        public ResultsWindowView()
         {
             InitializeComponent();
         }

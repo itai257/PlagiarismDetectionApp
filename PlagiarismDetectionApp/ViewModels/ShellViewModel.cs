@@ -1,52 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Prism.Commands;
-using System.Windows.Forms;
-using Prism.Mvvm;
+﻿using Prism.Mvvm;
+using PlagiarismDetectionApp.Views;
+using Prism.Regions;
 
 namespace PlagiarismDetectionApp.ViewModels
 {
     class ShellViewModel : BindableBase
     {
         public string Text { set; get; } = "textesgsjnhgsd";
+        private IRegionManager regionManager;
 
-        private string corpusPath;
-
-        public string CorpusPath
+        public ShellViewModel(MainWindowView mainWindowView, IRegionManager regionManager)
         {
-            get
-            {
-                return corpusPath;
-            }
-            set
-            {
-                corpusPath = value;
-                RaisePropertyChanged(nameof(CorpusPath));
-            }
-        }
-
-        public DelegateCommand TextFieldFocusedCommand { get; }
-
-        public ShellViewModel()
-        {
-            TextFieldFocusedCommand = new DelegateCommand(OpenFileBrowser);
-        }
-
-        private void OpenFileBrowser()
-        {
-                OpenFileDialog();
-        }
-
-        private void OpenFileDialog()
-        {
-            var openFolderDialog = new FolderBrowserDialog();
-            if (openFolderDialog.ShowDialog() == DialogResult.OK)
-            {
-                CorpusPath = openFolderDialog.SelectedPath;
-            }
+            this.regionManager = regionManager;
+            regionManager.RegisterViewWithRegion("MainRegion", typeof(MainWindowView));
         }
     }
 }
