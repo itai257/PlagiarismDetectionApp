@@ -6,6 +6,7 @@ using PlagiarismDetectionApp.Views;
 using PlagiarismDetectionApp.Models;
 using Microsoft.Practices.Prism.Regions;
 using Microsoft.Practices.ServiceLocation;
+using PlagiarismDetectionApp.ViewModels;
 
 namespace PlagiarismDetectionApp
 {
@@ -45,11 +46,14 @@ namespace PlagiarismDetectionApp
             Container.RegisterType<AboutView>("AboutView");
             Container.RegisterType<MainWindowView>("MainWindowView");
             Container.RegisterType<ResultsWindowView>("ResultsWindowView");
+            Container.RegisterType<AlgorithmView>("AlgorithmView");
             Container.RegisterTypeForNavigation<ResultsWindowView>();
             Container.RegisterTypeForNavigation<AboutView>();
+            Container.RegisterTypeForNavigation<AlgorithmView>();
 
             //Others
-            Container.RegisterType<MainWindowModel, MainWindowModel>(new ContainerControlledLifetimeManager());
+            Container.RegisterType<MainWindowModel>(new ContainerControlledLifetimeManager());
+            Container.RegisterType<AlgorithmViewModel>();
 
         }
     }

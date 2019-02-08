@@ -87,12 +87,14 @@ namespace PlagiarismDetectionApp.ViewModels
             {
                 var ngramAsInt = int.Parse(NGramSize);
                 var chunkSizeAsInt = int.Parse(SegmentChunkSize);
-                regionManager.RequestNavigate("MainRegion", "ResultsWindowView");
+                regionManager.RequestNavigate("MainRegion", "AlgorithmView");
             }
         }
 
         private List<string> GetNonEmptyTxTFilesExistsInFolder()
         {
+            if (corpusPath == null)
+                return new List<string>();
             var txtFilesPath = Directory.EnumerateFiles(CorpusPath, "*.txt").ToList();
             var txtFilesToDeliver = new List<string>();
             foreach (var filePath in txtFilesPath)
@@ -105,7 +107,7 @@ namespace PlagiarismDetectionApp.ViewModels
 
             if (!txtFilesToDeliver.Any())
             {
-                MessageQueue.Enqueue("At Least One File In The Folder Should Be Non Empty .txt File")
+                MessageQueue.Enqueue("At Least One File In The Folder Should Be Non Empty .txt File");
             }
 
             return txtFilesToDeliver;

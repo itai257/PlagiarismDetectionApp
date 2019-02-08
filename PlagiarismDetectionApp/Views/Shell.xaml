@@ -41,7 +41,7 @@
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition></ColumnDefinition>
                         <ColumnDefinition></ColumnDefinition>
-                        <ColumnDefinition></ColumnDefinition>
+                        <ColumnDefinition Width="0.6*"></ColumnDefinition>
                     </Grid.ColumnDefinitions>
                     <Image Grid.Column="0" Height="50" Width="50" HorizontalAlignment="Left" Source="/PlagiarismDetectionApp;component/Resources/icon.png"/>
                     <TextBlock Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="35" Margin="60,10"><Run Text="PlagiCheck"/></TextBlock>
