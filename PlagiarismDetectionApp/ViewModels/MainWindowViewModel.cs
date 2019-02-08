@@ -9,14 +9,19 @@ using Prism.Commands;
 using System.Windows.Forms;
 using Prism.Regions;
 using PlagiarismDetectionApp.Views;
+using MaterialDesignThemes.Wpf;
+using System.IO;
 
 namespace PlagiarismDetectionApp.ViewModels
 {
     class MainWindowViewModel : BindableBase
     {
-            private readonly MainWindowModel model;
+        private readonly MainWindowModel model;
         private readonly IRegionManager regionManager;
         private string corpusPath;
+        private string segmentChunkSize;
+        private string nGramSize;
+        private SnackbarMessageQueue _messageQueue;
 
         public MainWindowViewModel(MainWindowModel model, IRegionManager regionManager)
         {
@@ -24,6 +29,7 @@ namespace PlagiarismDetectionApp.ViewModels
             this.regionManager = regionManager;
             TextFieldFocusedCommand = new DelegateCommand(OpenFileBrowser);
             ExecuteAlgorithm = new DelegateCommand(ExecuteAlgorithmHandler);
+            MessageQueue = new SnackbarMessageQueue();
         }
 
         public string CorpusPath
@@ -39,6 +45,32 @@ namespace PlagiarismDetectionApp.ViewModels
             }
         }
 
+        public string SegmentChunkSize
+        {
+            get
+            {
+                return segmentChunkSize;
+            }
+            set
+            {
+                segmentChunkSize = value;
+                RaisePropertyChanged(nameof(segmentChunkSize));
+            }
+        }
+
+        public string NGramSize
+        {
+            get
+            {
+                return nGramSize;
+            }
+            set
+            {
+                nGramSize = value;
+                RaisePropertyChanged(nameof(nGramSize));
+            }
+        }
+
         public DelegateCommand TextFieldFocusedCommand { get; }
 
         public DelegateCommand ExecuteAlgorithm { get; }
@@ -50,7 +82,63 @@ namespace PlagiarismDetectionApp.ViewModels
 
         private void ExecuteAlgorithmHandler()
         {
-            regionManager.RequestNavigate("MainRegion", "ResultsWindowView");
+            var textFilesToDeliver = GetNonEmptyTxTFilesExistsInFolder();
+            if (ValidateInputBoxes() && textFilesToDeliver.Any())
+            {
+                var ngramAsInt = int.Parse(NGramSize);
+                var chunkSizeAsInt = int.Parse(SegmentChunkSize);
+                regionManager.RequestNavigate("MainRegion", "ResultsWindowView");
+            }
+        }
+
+        private List<string> GetNonEmptyTxTFilesExistsInFolder()
+        {
+            var txtFilesPath = Directory.EnumerateFiles(CorpusPath, "*.txt").ToList();
+            var txtFilesToDeliver = new List<string>();
+            foreach (var filePath in txtFilesPath)
+            {
+                if((new FileInfo(filePath).Length) > 0)
+                {
+                    txtFilesToDeliver.Add(filePath);
+                }
+            }
+
+            if (!txtFilesToDeliver.Any())
+            {
+                MessageQueue.Enqueue("At Least One File In The Folder Should Be Non Empty .txt File")
+            }
+
+            return txtFilesToDeliver;
+        }
+
+        public SnackbarMessageQueue MessageQueue
+        {
+            get => _messageQueue;
+            set => SetProperty(ref _messageQueue, value);
+        }
+
+        private bool ValidateInputBoxes()
+        {
+            if (string.IsNullOrEmpty(NGramSize))
+            {
+                NGramSize = "4";
+            }
+
+            if (string.IsNullOrEmpty(SegmentChunkSize))
+            {
+                SegmentChunkSize = "4000";
+            }
+
+            if (!int.TryParse(NGramSize,out int k))
+            {
+                MessageQueue.Enqueue("N-Gram Size Should Be A Numbers");
+                return false;
+            }else if(!int.TryParse(SegmentChunkSize, out int q))
+            {
+                MessageQueue.Enqueue("Segment Chunk Size Should Be A Numbers");
+                return false;
+            }
+                return true;
         }
 
         private void OpenFileDialog()
