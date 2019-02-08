@@ -42,10 +42,11 @@ namespace PlagiarismDetectionApp
         private void BootStrapPlagiarismComponent()
         {
             //Views
-            Container.RegisterType<object, MainWindowView>("MainWindowView");
-            Container.RegisterType<object, ResultsWindowView>("ResultsWindowView");
-
+            Container.RegisterType<AboutView>("AboutView");
+            Container.RegisterType<MainWindowView>("MainWindowView");
+            Container.RegisterType<ResultsWindowView>("ResultsWindowView");
             Container.RegisterTypeForNavigation<ResultsWindowView>();
+            Container.RegisterTypeForNavigation<AboutView>();
 
             //Others
             Container.RegisterType<MainWindowModel, MainWindowModel>(new ContainerControlledLifetimeManager());

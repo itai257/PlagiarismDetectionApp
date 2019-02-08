@@ -11,11 +11,47 @@
                       prism:ViewModelLocator.AutoWireViewModel="True"
         Title="Plagiarism Detection" Width="1000" Height="650" Name="ShellWindow" WindowStartupLocation="CenterScreen">
     <DockPanel>
-        <materialDesign:ColorZone Padding="16" materialDesign:ShadowAssist.ShadowDepth="Depth2" Mode="PrimaryMid" DockPanel.Dock="Top" Height="100">
+        <materialDesign:ColorZone 
+            Visibility="{Binding ShowAboutView, Converter={StaticResource BooleanToVisibilityConverter}}"
+            Padding="16" 
+            materialDesign:ShadowAssist.ShadowDepth="Depth2"
+            Mode="PrimaryMid" 
+            DockPanel.Dock="Top" 
+            Height="64">
+            <DockPanel>
+                <Button VerticalAlignment="Center" Command="{Binding GoBackCommand}" Style="{DynamicResource MaterialDesignFlatButton}" DockPanel.Dock="Left">
+                    <TextBlock Foreground="White" FontSize="16">BACK</TextBlock>
+                </Button>
+                <Button Visibility="Hidden" IsEnabled="False" Style="{DynamicResource MaterialDesignFlatButton}" DockPanel.Dock="Right">
+                    <TextBlock Foreground="White" FontSize="16">BACK</TextBlock>
+                </Button>
+                <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="22" Text="About"/>
+            </DockPanel>
+        </materialDesign:ColorZone>
+
+        <materialDesign:ColorZone 
+            Visibility="{Binding ShowMainView, Converter={StaticResource BooleanToVisibilityConverter}}"
+            Padding="16" 
+            materialDesign:ShadowAssist.ShadowDepth="Depth2" 
+            Mode="PrimaryMid" 
+            DockPanel.Dock="Top" 
+            Height="100">
             <StackPanel>
                 <Grid>
-                    <Image Height="50" Width="50" HorizontalAlignment="Left" Source="/PlagiarismDetectionApp;component/Resources/icon.png"/>
-                    <TextBlock HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="35" Margin="60,10"><Run Text="PlagiCheck"/></TextBlock>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition></ColumnDefinition>
+                        <ColumnDefinition></ColumnDefinition>
+                        <ColumnDefinition></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Image Grid.Column="0" Height="50" Width="50" HorizontalAlignment="Left" Source="/PlagiarismDetectionApp;component/Resources/icon.png"/>
+                    <TextBlock Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="35" Margin="60,10"><Run Text="PlagiCheck"/></TextBlock>
+                    <Button Grid.Column="2"
+                         Command="{Binding ShowAboutViewCommand}">
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon Kind="Script" VerticalAlignment="Center"/>
+                            <TextBlock Margin="8 0 0 0" FontSize="18">ABOUT</TextBlock>
+                        </StackPanel>
+                    </Button>
                 </Grid>
             </StackPanel>
         </materialDesign:ColorZone>
