@@ -87,7 +87,7 @@ namespace PlagiarismDetectionApp.ViewModels
             {
                 var ngramAsInt = int.Parse(NGramSize);
                 var chunkSizeAsInt = int.Parse(SegmentChunkSize);
-                regionManager.RequestNavigate("MainRegion", "AlgorithmView");
+                regionManager.RequestNavigate("MainRegion", "ResultsWindowView");
             }
         }
 
