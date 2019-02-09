@@ -11,11 +11,14 @@ using Prism.Regions;
 using PlagiarismDetectionApp.Views;
 using MaterialDesignThemes.Wpf;
 using System.IO;
+using Prism.Events;
+using PlagiarismDetectionApp.Services;
 
 namespace PlagiarismDetectionApp.ViewModels
 {
     class MainWindowViewModel : BindableBase
     {
+        private readonly IEventAggregator eventAggregator;
         private readonly MainWindowModel model;
         private readonly IRegionManager regionManager;
         private string corpusPath;
@@ -23,8 +26,9 @@ namespace PlagiarismDetectionApp.ViewModels
         private string nGramSize;
         private SnackbarMessageQueue _messageQueue;
 
-        public MainWindowViewModel(MainWindowModel model, IRegionManager regionManager)
+        public MainWindowViewModel(MainWindowModel model, IRegionManager regionManager, IEventAggregator eventAggregator)
         {
+            this.eventAggregator = eventAggregator;
             this.model = model;
             this.regionManager = regionManager;
             TextFieldFocusedCommand = new DelegateCommand(OpenFileBrowser);
@@ -83,18 +87,27 @@ namespace PlagiarismDetectionApp.ViewModels
         private void ExecuteAlgorithmHandler()
         {
             var textFilesToDeliver = GetNonEmptyTxTFilesExistsInFolder();
-            if (ValidateInputBoxes() && textFilesToDeliver.Any())
+            if (ValidateInputBoxes()) // && textFilesToDeliver.Any()
             {
                 var ngramAsInt = int.Parse(NGramSize);
                 var chunkSizeAsInt = int.Parse(SegmentChunkSize);
+                var eventArgs = new AlgorithmInvokedEventArgs();
+                eventArgs.NGramSize = ngramAsInt;
+                eventArgs.SegmentChunkSize = chunkSizeAsInt;
+                eventArgs.TextFiles = textFilesToDeliver;
+
                 regionManager.RequestNavigate("MainRegion", "AlgorithmView");
+                eventAggregator.GetEvent<AlgorithmInvokedEvent>().Publish(eventArgs);
             }
         }
 
         private List<string> GetNonEmptyTxTFilesExistsInFolder()
         {
             if (corpusPath == null)
+            {
+                MessageQueue.Enqueue("path cannot be empty!");
                 return new List<string>();
+            }
             var txtFilesPath = Directory.EnumerateFiles(CorpusPath, "*.txt").ToList();
             var txtFilesToDeliver = new List<string>();
             foreach (var filePath in txtFilesPath)
