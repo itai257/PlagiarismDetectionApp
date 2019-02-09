@@ -13,5 +13,10 @@ namespace PlagiarismDetectionApp.ViewModels
         {
 
         }
+
+        public void GoBack()
+        {
+
+        }
     }
 }
