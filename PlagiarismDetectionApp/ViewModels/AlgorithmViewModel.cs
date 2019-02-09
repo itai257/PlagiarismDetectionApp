@@ -15,16 +15,13 @@ namespace PlagiarismDetectionApp.ViewModels
 {
     class AlgorithmViewModel: BindableBase, INavigationAware
     {
-        private string argus;
         private IEventAggregator eventAggregator;
+        private IRegionManager regionManager;
 
-        public string Argus { get { return argus; } set { argus = value; RaisePropertyChanged(nameof(Argus)); } }
-
-
-        public AlgorithmViewModel(IEventAggregator eventAggregator)
+        public AlgorithmViewModel(IEventAggregator eventAggregator, IRegionManager regionManager)
         {
             this.eventAggregator = eventAggregator;
-            
+            this.regionManager = regionManager;
             eventAggregator.GetEvent<AlgorithmInvokedEvent>().Subscribe(obj => {
                 Task.Run(() => InovkeAlgorithm(obj));
                 });
@@ -73,7 +70,9 @@ namespace PlagiarismDetectionApp.ViewModels
                 {
                     string result = reader.ReadToEnd();
                     Console.Write(result);
-                    Argus += result;
+                    var navParams = new NavigationParameters();
+                    navParams.Add("", result);
+                    regionManager.RequestNavigate("MainRegion", "MainWindowView");
                 }
             }
         }
