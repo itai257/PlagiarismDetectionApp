@@ -9,6 +9,28 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-            
+        <Grid.RowDefinitions>
+            <RowDefinition Height="0.45*" />
+            <RowDefinition Height="0.55*" />
+        </Grid.RowDefinitions>
+        <TextBlock Text="{Binding Argus, Mode=TwoWay}"></TextBlock>
+        <TextBlock Grid.Row="0"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Center"
+                       Margin="32" Style="{StaticResource MaterialDesignTitleTextBlock}"
+                       Foreground="DarkBlue"
+                       FontSize="22" TextWrapping="Wrap"
+                       TextAlignment="Center">Please wait while the algorithm is running</TextBlock>
+        <ProgressBar x:Name="Initpb" Grid.Row="1" VerticalAlignment="Top">
+            <ProgressBar.Style>
+                <Style TargetType="ProgressBar" BasedOn="{StaticResource MaterialDesignCircularProgressBar}">
+                    <Setter Property="Width" Value="100" />
+                    <Setter Property="Height" Value="100" />
+                    <Setter Property="VerticalAlignment" Value="Center" />
+                    <Setter Property="HorizontalAlignment" Value="Center" />
+                    <Setter Property="IsIndeterminate" Value="True"/>
+                </Style>
+            </ProgressBar.Style>
+        </ProgressBar>
     </Grid>
 </UserControl>
