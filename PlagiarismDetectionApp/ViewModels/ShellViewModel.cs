@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using Prism.Mvvm;
 using PlagiarismDetectionApp.Views;
 using Prism.Commands;
@@ -10,7 +11,7 @@ namespace PlagiarismDetectionApp.ViewModels
     {
         private IRegionManager regionManager;
         private bool _showAbout = false;
-        private bool _showMainView;
+        private string _activeView = "";
 
         public string Text { set; get; } = "textesgsjnhgsd";
         public DelegateCommand ShowAboutViewCommand { get; set; }
@@ -22,26 +23,20 @@ namespace PlagiarismDetectionApp.ViewModels
             set => SetProperty(ref _showAbout, value);
         }
 
-        public bool ShowMainView
-        {
-            get => _showMainView;
-            set => SetProperty(ref _showMainView, value);
-        }
-
         public ShellViewModel(MainWindowView mainWindowView, IRegionManager regionManager)
         {
             this.regionManager = regionManager;
             regionManager.RegisterViewWithRegion("MainRegion", typeof(MainWindowView));
             ShowAboutViewCommand = new DelegateCommand(OnShowAbout);
             GoBackCommand = new DelegateCommand(OnGoBack);
-            ShowMainView = true;
             ShowAboutView = false;
 
         }
 
         private void OnShowAbout()
         {
-            ShowMainView = false;
+            var v = regionManager.Regions["MainRegion"].ActiveViews.FirstOrDefault();
+            _activeView = v?.ToString();
             ShowAboutView = true;
             regionManager.RequestNavigate("MainRegion", "AboutView");
         }
@@ -49,8 +44,7 @@ namespace PlagiarismDetectionApp.ViewModels
         private void OnGoBack()
         {
             ShowAboutView = false;
-            ShowMainView  = true;
-            regionManager.RequestNavigate("MainRegion", "MainWindowView");
+            regionManager.RequestNavigate("MainRegion", string.IsNullOrEmpty(_activeView) ? "MainWindowView" : _activeView);
         }
     }
 }

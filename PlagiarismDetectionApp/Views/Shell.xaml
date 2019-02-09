@@ -12,12 +12,24 @@
         Title="Plagiarism Detection" Width="1000" Height="650" Name="ShellWindow" WindowStartupLocation="CenterScreen">
     <DockPanel>
         <materialDesign:ColorZone 
-            Visibility="{Binding ShowAboutView, Converter={StaticResource BooleanToVisibilityConverter}}"
             Padding="16" 
             materialDesign:ShadowAssist.ShadowDepth="Depth2"
             Mode="PrimaryMid" 
             DockPanel.Dock="Top" 
             Height="64">
+            <materialDesign:ColorZone.Style>
+                <Style TargetType="{x:Type materialDesign:ColorZone}" BasedOn="{StaticResource {x:Type materialDesign:ColorZone}}">
+                    <Style.Setters>
+                        <Setter Property="Visibility" Value="Collapsed"></Setter>
+                    </Style.Setters>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding ShowAboutView}" Value="True">
+                            <Setter Property="Visibility" Value="Visible"></Setter>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+
+            </materialDesign:ColorZone.Style>
             <DockPanel>
                 <Button VerticalAlignment="Center" Command="{Binding GoBackCommand}" Style="{DynamicResource MaterialDesignFlatButton}" DockPanel.Dock="Left">
                     <TextBlock Foreground="White" FontSize="16">BACK</TextBlock>
@@ -30,12 +42,23 @@
         </materialDesign:ColorZone>
 
         <materialDesign:ColorZone 
-            Visibility="{Binding ShowMainView, Converter={StaticResource BooleanToVisibilityConverter}}"
             Padding="16" 
             materialDesign:ShadowAssist.ShadowDepth="Depth2" 
             Mode="PrimaryMid" 
             DockPanel.Dock="Top" 
             Height="100">
+            <materialDesign:ColorZone.Style>
+                <Style TargetType="{x:Type materialDesign:ColorZone}" BasedOn="{StaticResource {x:Type materialDesign:ColorZone}}">
+                    <Style.Setters>
+                        <Setter Property="Visibility" Value="Visible"></Setter>
+                    </Style.Setters>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding ShowAboutView}" Value="True">
+                            <Setter Property="Visibility" Value="Collapsed"></Setter>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </materialDesign:ColorZone.Style>
             <StackPanel>
                 <Grid>
                     <Grid.ColumnDefinitions>
@@ -46,6 +69,7 @@
                     <Image Grid.Column="0" Height="50" Width="50" HorizontalAlignment="Left" Source="/PlagiarismDetectionApp;component/Resources/icon.png"/>
                     <TextBlock Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="35" Margin="60,10"><Run Text="PlagiCheck"/></TextBlock>
                     <Button Grid.Column="2"
+                            Visibility="{Binding ShowAboutButton, Converter={StaticResource BooleanToVisibilityConverter}}"
                          Command="{Binding ShowAboutViewCommand}">
                         <StackPanel Orientation="Horizontal">
                             <materialDesign:PackIcon Kind="Script" VerticalAlignment="Center"/>
@@ -57,7 +81,7 @@
         </materialDesign:ColorZone>
 
         <ContentControl prism:RegionManager.RegionName="MainRegion"></ContentControl>
-        
+
     </DockPanel>
 </Window>
 
