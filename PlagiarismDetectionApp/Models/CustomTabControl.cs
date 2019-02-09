@@ -13,7 +13,7 @@ namespace PlagiarismDetectionApp.Models
         {
             foreach (TabItem item in Items)
             {
-                var newW = ActualWidth / Items.Count - 1;
+                var newW = (ActualWidth / 2) / Items.Count ;
                 if (newW < 0) newW = 0;
 
                 item.Width = newW * 0.998;
