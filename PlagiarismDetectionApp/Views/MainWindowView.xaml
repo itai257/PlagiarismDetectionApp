@@ -12,7 +12,7 @@
         Height="519" Width="1000"
         >
     <StackPanel Width="1000" Height="519" Orientation="Vertical" VerticalAlignment="Top">
-        <TextBlock HorizontalAlignment="Center"  Style="{StaticResource MaterialDesignDisplay1TextBlock}" TextWrapping="Wrap" Margin="0,20" TextAlignment="Center">Just uplod curpos and detect plagiarism</TextBlock>
+        <TextBlock HorizontalAlignment="Center"  Style="{StaticResource MaterialDesignDisplay1TextBlock}" TextWrapping="Wrap" Margin="0,20" TextAlignment="Center">Just upload curpos and detect plagiarism</TextBlock>
         <Grid HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20,5">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="700"/>

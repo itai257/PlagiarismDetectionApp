@@ -56,7 +56,7 @@ namespace PlagiarismDetectionApp
             //Others
             Container.RegisterType<MainWindowModel>(new ContainerControlledLifetimeManager());
             Container.RegisterType<AlgorithmViewModel>();
-            Container.RegisterType<SharedConfigurations>();
+            Container.RegisterType<SharedConfigurations>(new ContainerControlledLifetimeManager());
 
         }
     }

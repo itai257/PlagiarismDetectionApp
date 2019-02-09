@@ -70,7 +70,6 @@ namespace PlagiarismDetectionApp.ViewModels
                 using (StreamReader reader = process.StandardOutput)
                 {
                     string result = reader.ReadToEnd();
-                    Console.Write(result);
                     Results = new NavigationParameters();
                     Results.Add("Results", result);
                 }
