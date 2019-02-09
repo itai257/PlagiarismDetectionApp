@@ -1,4 +1,5 @@
 ﻿using PlagiarismDetectionApp.Services;
+using Prism.Commands;
 using Prism.Events;
 using Prism.Mvvm;
 using Prism.Regions;
@@ -19,9 +20,11 @@ namespace PlagiarismDetectionApp.ViewModels
 
         public string Argus { get { return argus; } set { argus = value; RaisePropertyChanged(nameof(Argus)); } }
 
+
         public AlgorithmViewModel(IEventAggregator eventAggregator)
         {
             this.eventAggregator = eventAggregator;
+            
             eventAggregator.GetEvent<AlgorithmInvokedEvent>().Subscribe(obj => {
                 Task.Run(() => InovkeAlgorithm(obj));
                 });
@@ -29,7 +32,7 @@ namespace PlagiarismDetectionApp.ViewModels
 
         private void InovkeAlgorithm(AlgorithmInvokedEventArgs obj)
         {
-            var path = "C:\\Users\\imalka\\Documents\\pycharm\\python2\\main.py"; // neet to change to real script path
+            var path = "C:\\Users\\imalka\\Desktop\\PlagiCheck-Alg\\main.py"; // neet to change to real script path
             var parameters = "";
             var textList = obj.TextFiles as List<string>;
             parameters += (obj.NGramSize + " ");

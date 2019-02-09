@@ -13,7 +13,7 @@
             <RowDefinition Height="0.45*" />
             <RowDefinition Height="0.55*" />
         </Grid.RowDefinitions>
-        <TextBlock Text="{Binding Argus, Mode=TwoWay}"></TextBlock>
+        <TextBlock Text="{Binding Argus, Mode=TwoWay}" TextWrapping="Wrap"></TextBlock>
         <TextBlock Grid.Row="0"
                        HorizontalAlignment="Center"
                        VerticalAlignment="Center"
