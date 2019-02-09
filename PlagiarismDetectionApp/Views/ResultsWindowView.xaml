@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PlagiarismDetectionApp.Views"
         mc:Ignorable="d"
+        xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
         xmlns:chartingToolkit="clr-namespace:System.Windows.Controls.DataVisualization.Charting;assembly=System.Windows.Controls.DataVisualization.Toolkit"
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
@@ -22,110 +23,126 @@
             <Setter Property="FontSize" Value="18" />
         </Style>
     </UserControl.Resources>
-    <models:CustomTabControl Background="Transparent">
-        <TabControl.Resources>
-            <Style TargetType="TabItem">
-                <Setter Property="FontSize" Value="16"/>
-                <Setter Property="Template">
-                    <Setter.Value>
-                        <ControlTemplate TargetType="{x:Type TabItem}">
-                            <Grid Name="Panel">
-                                <Border Name="Border" BorderBrush="Gainsboro" BorderThickness="1,1,1,0">
-                                    <ContentPresenter x:Name="ContentSite"
+    <StackPanel>
+        <models:CustomTabControl Background="Transparent">
+            <TabControl.Resources>
+                <Style TargetType="TabItem">
+                    <Setter Property="FontSize" Value="16"/>
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="{x:Type TabItem}">
+                                <Grid Name="Panel">
+                                    <Border Name="Border" BorderBrush="Gainsboro" BorderThickness="1,1,1,0">
+                                        <ContentPresenter x:Name="ContentSite"
                                                           VerticalAlignment="Center"
                                                           HorizontalAlignment="Center"
                                                           ContentSource="Header"
                                                           Margin="10,2"/>
-                                </Border>
-                            </Grid>
-                            <ControlTemplate.Triggers>
-                                <Trigger Property="IsSelected" Value="True">
-                                    <Setter TargetName="Panel" Property="Background" Value="LightSkyBlue" />
-                                </Trigger>
-                                <Trigger Property="IsSelected" Value="False">
-                                    <Setter TargetName="Panel" Property="Background" Value="White" />
-                                </Trigger>
-                            </ControlTemplate.Triggers>
-                        </ControlTemplate>
-                    </Setter.Value>
-                </Setter>
-            </Style>
-        </TabControl.Resources>
-        <TabItem Header="Report">
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
+                                    </Border>
+                                </Grid>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsSelected" Value="True">
+                                        <Setter TargetName="Panel" Property="Background" Value="LightSkyBlue" />
+                                    </Trigger>
+                                    <Trigger Property="IsSelected" Value="False">
+                                        <Setter TargetName="Panel" Property="Background" Value="White" />
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </TabControl.Resources>
+            <TabItem Header="Results">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="0.3*"/>
+                        <ColumnDefinition Width="0.55*"/>
+                        <ColumnDefinition Width="0.3*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="0.8*"></RowDefinition>
+                        <RowDefinition Height="0.2*"></RowDefinition>
+                    </Grid.RowDefinitions>
 
-                <materialDesign:Card Grid.Column="1" Margin="0 16 0 16">
-                    <DataGrid Padding="8" ItemsSource="{Binding UsersSuspicionLevel}" 
+                    <materialDesign:Card Grid.Column="1" Margin="0,16,0,0" >
+                        <DataGrid Padding="8" ItemsSource="{Binding Results}" 
                                   CanUserSortColumns="True" 
                                   CanUserAddRows="False" 
                                   CanUserReorderColumns="False"
                                   CanUserResizeColumns="False"
                                   CanUserResizeRows="False"
-                                  AutoGenerateColumns="False">
-                        <DataGrid.Columns>
-                            <DataGridTextColumn Binding="{Binding Key}" IsReadOnly="True">
-                                <DataGridTextColumn.Header>
-                                    <Border Background="Transparent" Padding="6 0 6 0" HorizontalAlignment="Center">
-                                        <TextBlock Text="Text Name"></TextBlock>
-                                    </Border>
-                                </DataGridTextColumn.Header>
-                            </DataGridTextColumn>
-                            <DataGridTextColumn Binding="{Binding Level, StringFormat={}{0:#,#.00}}" IsReadOnly="True">
-                                <DataGridTextColumn.Header>
-                                    <Border Background="Transparent" Padding="6 0 6 0" HorizontalAlignment="Center">
-                                        <TextBlock Text="Results"></TextBlock>
-                                    </Border>
-                                </DataGridTextColumn.Header>
-                            </DataGridTextColumn>
-                        </DataGrid.Columns>
-                    </DataGrid>
-                </materialDesign:Card>
-
-            </Grid>
-        </TabItem>
-        <TabItem Header="Export">
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition/>
-                    <RowDefinition/>
-                    <RowDefinition Height="Auto"/>
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
-                </Grid.ColumnDefinitions>
-
-                <TextBlock Grid.Row="0"
-                               Grid.Column="0"
-                               Grid.ColumnSpan="3"
-                               VerticalAlignment="Center"
-                               HorizontalAlignment="Center"
-                               Text="{Binding ExportOptionDescription}"
-                               ></TextBlock>
-
-                <ComboBox Grid.Row="1"
-                              Grid.Column="1"
-                              SelectedIndex="0"
-                              ItemsSource="{Binding ExportOptions}"
-                              SelectedItem="{Binding SelectedExportOption}"></ComboBox>
-
-                <Grid Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="2">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="*"/>
-                    </Grid.RowDefinitions>
-                    <StackPanel Orientation="Horizontal" FlowDirection="RightToLeft">
-                        <Button Command="{Binding ExportCommand}" Margin="16">Export</Button>
-                    </StackPanel>
-                    <materialDesign:Snackbar Grid.Row="1" MessageQueue="{Binding MessageQueue}"/>
+                                  AutoGenerateColumns="False" Margin="0,0,0,0">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Binding="{Binding Key}" IsReadOnly="True">
+                                    <DataGridTextColumn.Header>
+                                        <Border Background="Transparent" Padding="6 0 6 0" HorizontalAlignment="Center">
+                                            <TextBlock Text="Text Name"></TextBlock>
+                                        </Border>
+                                    </DataGridTextColumn.Header>
+                                </DataGridTextColumn>
+                                <DataGridTextColumn Binding="{Binding Value}" IsReadOnly="True">
+                                    <DataGridTextColumn.Header>
+                                        <Border Background="Transparent" Padding="6 0 6 0" HorizontalAlignment="Center">
+                                            <TextBlock Text="Results"></TextBlock>
+                                        </Border>
+                                    </DataGridTextColumn.Header>
+                                </DataGridTextColumn>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </materialDesign:Card>
+                    <Button Margin="88,10,137,10" Command="{Binding GoToMainCommand}" Grid.Row="1" Grid.Column="1" Width="250">Go To Main Window</Button>
                 </Grid>
-            </Grid>
-        </TabItem>
-    </models:CustomTabControl>
+            </TabItem>
+            <TabItem Header="Results On Graph">
+                <Grid Height="482">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="0.8*"></RowDefinition>
+                        <RowDefinition Height="0.2*"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="148"></ColumnDefinition>
+                        <ColumnDefinition Width="553"/>
+                        <ColumnDefinition Width="Auto"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <lvc:CartesianChart Series="{Binding SeriesCollections}" Grid.Column="0" Grid.Row="0" LegendLocation="Right" Width="700" HorizontalAlignment="Left" Grid.ColumnSpan="2">
+                        <lvc:CartesianChart.AxisY>
+                            <lvc:Axis Title="Value" LabelFormatter="{Binding YFormatter}"></lvc:Axis>
+                        </lvc:CartesianChart.AxisY>
+                        <lvc:CartesianChart.AxisX>
+                            <lvc:Axis Title="Texts" Labels="{Binding Labels}"></lvc:Axis>
+                        </lvc:CartesianChart.AxisX>
+                    </lvc:CartesianChart>
+
+
+                    <materialDesign:Card Grid.Column="2" Width="250" Height="500" Margin="21,20,20,-38" Grid.Row="0" Grid.RowSpan="2">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <TextBlock Grid.Row="0" Style="{StaticResource MaterialDesignTitleTextBlock}" Margin="0 8 0 0" HorizontalAlignment="Center" Foreground="DarkBlue">Explenation</TextBlock>
+                            <TextBlock Grid.Row="1" FontWeight="Bold"
+                                   VerticalAlignment="Top"
+                                   HorizontalAlignment="Center"
+                                   TextWrapping="Wrap"
+                                       Margin="22,20,10,0"
+                                   Text="The Results point are presented along the blue line on the chart" Width="218"
+                                   ></TextBlock>
+                            <TextBlock Grid.Row="1" FontWeight="Bold"
+                                   VerticalAlignment="Top"
+                                   HorizontalAlignment="Center"
+                                   TextWrapping="Wrap"
+                                       Margin="21,150,10,0"
+                                   Text="The Threshold is presented with the red line along the Y axis" Width="219"
+                                   ></TextBlock>
+                        </Grid>
+                    </materialDesign:Card>
+                    <Button Command="{Binding GoToMainCommand}" Grid.Row="1" Width="250" Grid.Column="1" Margin="78,32,225,32">Go To Main Window</Button>
+                </Grid>
+
+            </TabItem>
+        </models:CustomTabControl>
+
+    </StackPanel>
 </UserControl>

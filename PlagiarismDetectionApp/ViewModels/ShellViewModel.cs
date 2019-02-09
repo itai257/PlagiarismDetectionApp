@@ -16,6 +16,7 @@ namespace PlagiarismDetectionApp.ViewModels
         public string Text { set; get; } = "textesgsjnhgsd";
         public DelegateCommand ShowAboutViewCommand { get; set; }
         public DelegateCommand GoBackCommand { get; set; }
+        public DelegateCommand ShowConfigurationsViewCommand { get; set; }
 
         public bool ShowAboutView
         {
@@ -28,9 +29,15 @@ namespace PlagiarismDetectionApp.ViewModels
             this.regionManager = regionManager;
             regionManager.RegisterViewWithRegion("MainRegion", typeof(MainWindowView));
             ShowAboutViewCommand = new DelegateCommand(OnShowAbout);
+            ShowConfigurationsViewCommand = new DelegateCommand(ShowConfigurationsViewCommandHandler);
             GoBackCommand = new DelegateCommand(OnGoBack);
             ShowAboutView = false;
 
+        }
+
+        private void ShowConfigurationsViewCommandHandler()
+        {
+            regionManager.RequestNavigate("MainRegion", "ConfigurationsWindowView");
         }
 
         private void OnShowAbout()

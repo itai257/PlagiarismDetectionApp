@@ -44,14 +44,14 @@
                 <!-- Row 1 left grid-->
                 <StackPanel Grid.ColumnSpan="2" Grid.Row="1" Orientation="Horizontal" Margin="10 32 0 0">
                     <TextBlock Style="{StaticResource MaterialDesignTitleTextBlock}" Foreground="DarkBlue">Select N-Gram Size</TextBlock>
-                    <TextBox  HorizontalAlignment="Left" Width="100" Margin="16 0 0 0" Text="{Binding nGramSize}" materialDesign:HintAssist.Hint=" Default: 4" ToolTip="N-Gram Size">
+                    <TextBox  HorizontalAlignment="Left" Width="100" Margin="16 0 0 0" Text="{Binding NGramSize}" materialDesign:HintAssist.Hint=" Default: 4" ToolTip="N-Gram Size">
 
                     </TextBox>
                 </StackPanel>
                 <!-- Row 1 left grid-->
                 <StackPanel Grid.ColumnSpan="2" Grid.Row="2" Orientation="Horizontal" Margin="10 32 0 0">
                     <TextBlock Style="{StaticResource MaterialDesignTitleTextBlock}" Foreground="DarkBlue">Select Chunk size for text segments</TextBlock>
-                    <TextBox  HorizontalAlignment="Left" Text="{Binding segmentChunkSize}" Width="120" Margin="16 0 0 0" materialDesign:HintAssist.Hint=" Default: 4000" ToolTip="Chunk Size">
+                    <TextBox  HorizontalAlignment="Left" Text="{Binding SegmentChunkSize}" Width="120" Margin="16 0 0 0" materialDesign:HintAssist.Hint=" Default: 4000" ToolTip="Chunk Size">
 
                     </TextBox>
                 </StackPanel>
@@ -65,10 +65,37 @@
                     </Grid.RowDefinitions>
                     <TextBlock Grid.Row="0" Style="{StaticResource MaterialDesignTitleTextBlock}" Margin="0 8 0 0" HorizontalAlignment="Center" Foreground="DarkBlue">Explenation</TextBlock>
                     <TextBlock Grid.Row="1"
-                                   VerticalAlignment="Center"
+                                   VerticalAlignment="Top"
                                    HorizontalAlignment="Center"
                                    TextWrapping="Wrap"
-                                   Text="Bla Bla Bla Bla Bla BlaBla Bla Bla Bla Bla BlaBla Bla Bla Bla Bla BlaBla Bla Bla Bla Bla BlaBla Bla Bla Bla Bla Bla"
+                               FontWeight="Bold"
+                                   Text="Program will load only .txt files!" Margin="6,10,0,0"
+                                   ></TextBlock>
+                    <TextBlock Grid.Row="1"
+                                   VerticalAlignment="Top"
+                                   HorizontalAlignment="Center"
+                                   TextWrapping="Wrap"
+                               FontWeight="Bold"
+                                   Text="Chunk Size is the size of splitting each text for analyze. " Margin="18,39,2,0" Height="53" Width="190"
+                                   ></TextBlock>
+                    <TextBlock Grid.Row="1"
+                                   VerticalAlignment="Top"
+                                   HorizontalAlignment="Center"
+                                   TextWrapping="Wrap"
+                               FontWeight="Bold"
+                                   Text="Chunk Size too small will damage the algorithm efficiency " Margin="18,86,2,0" Height="53" Width="190"
+                                   ></TextBlock>
+                    <TextBlock Grid.Row="1"
+                                   VerticalAlignment="Top"
+                                   HorizontalAlignment="Center"
+                                   TextWrapping="Wrap"
+                                   Text="Recommended value:" Margin="18,126,2,0" Height="53" Width="190"
+                                   ></TextBlock>
+                    <TextBlock Grid.Row="1"
+                                   VerticalAlignment="Top"
+                                   HorizontalAlignment="Center"
+                                   TextWrapping="Wrap"
+                                   Text="  Chunk size >= 4000" Margin="10,151,10,-15" Height="53" Width="190"
                                    ></TextBlock>
                 </Grid>
             </materialDesign:Card>
@@ -82,7 +109,7 @@
                 <Button Command="{Binding ExecuteAlgorithm}" Style="{StaticResource MaterialDesignRaisedButton}" Width="250" Margin="0 8 8 8">Find Plagiarism!</Button>
                 <materialDesign:Snackbar Grid.Row="0" MessageQueue="{Binding MessageQueue}" HorizontalAlignment="Right"/>
             </StackPanel>
-            
+
         </Grid>
     </StackPanel>
 </UserControl>

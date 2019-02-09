@@ -1,4 +1,4 @@
-﻿using PlagiarismDetectionApp.Services;
+﻿using PlagiarismDetectionApp.Models;
 using Prism.Commands;
 using Prism.Events;
 using Prism.Mvvm;
@@ -10,6 +10,8 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Threading;
 
 namespace PlagiarismDetectionApp.ViewModels
 {
@@ -17,29 +19,28 @@ namespace PlagiarismDetectionApp.ViewModels
     {
         private IEventAggregator eventAggregator;
         private IRegionManager regionManager;
+        private NavigationParameters Results;
+        private SharedConfigurations sharedConfigurations;
 
-        public AlgorithmViewModel(IEventAggregator eventAggregator, IRegionManager regionManager)
+        public AlgorithmViewModel(IRegionManager regionManager, SharedConfigurations sharedConfigurations)
         {
-            this.eventAggregator = eventAggregator;
             this.regionManager = regionManager;
-            eventAggregator.GetEvent<AlgorithmInvokedEvent>().Subscribe(obj => {
-                Task.Run(() => InovkeAlgorithm(obj));
-                });
-        }
-
-        private void InovkeAlgorithm(AlgorithmInvokedEventArgs obj)
-        {
-            var path = "C:\\Users\\imalka\\Desktop\\PlagiCheck-Alg\\main.py"; // neet to change to real script path
-            var parameters = "";
-            var textList = obj.TextFiles as List<string>;
-            parameters += (obj.NGramSize + " ");
-            parameters += (obj.SegmentChunkSize + " ");
-            textList.ForEach(t => parameters += ("\"" + t + "\" "));
-            run_cmd(path, parameters);
+            this.sharedConfigurations = sharedConfigurations;
         }
 
         public void OnNavigatedTo(NavigationContext navigationContext)
         {
+            var path = sharedConfigurations.PathToProjectMain; // main script path
+            var parameters = "";
+            var textList = navigationContext.Parameters["TextFiles"] as List<string>;
+            parameters += (navigationContext.Parameters["NGramSize"] + " ");
+            parameters += (navigationContext.Parameters["ChunkSize"] + " ");
+            textList.ForEach(t => parameters += ("\"" + t + "\" "));
+
+            Task.Run(() => run_cmd(path, parameters)).ContinueWith(
+                (o) => Application.Current.Dispatcher.Invoke(
+                    () => regionManager.RequestNavigate("MainRegion", "ResultsWindowView",Results)
+                    ));
         }
 
         public bool IsNavigationTarget(NavigationContext navigationContext)
@@ -54,7 +55,7 @@ namespace PlagiarismDetectionApp.ViewModels
         private void run_cmd(string cmd, string args)
         {
             ProcessStartInfo start = new ProcessStartInfo();
-            start.FileName = "C:\\Users\\imalka\\Documents\\pycharm\\PlagiCheckFinal\\venv\\Scripts\\python.exe"; // need to change to python.exe path
+            start.FileName = sharedConfigurations.PathToPythonExe; // python.exe path
             start.Arguments = string.Format("{0} {1}", cmd, args);
             start.UseShellExecute = false;
             start.RedirectStandardOutput = true;
@@ -70,11 +71,11 @@ namespace PlagiarismDetectionApp.ViewModels
                 {
                     string result = reader.ReadToEnd();
                     Console.Write(result);
-                    var navParams = new NavigationParameters();
-                    navParams.Add("", result);
-                    regionManager.RequestNavigate("MainRegion", "MainWindowView");
+                    Results = new NavigationParameters();
+                    Results.Add("Results", result);
                 }
             }
+
         }
     }
 }

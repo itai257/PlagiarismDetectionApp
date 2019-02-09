@@ -12,7 +12,6 @@ using PlagiarismDetectionApp.Views;
 using MaterialDesignThemes.Wpf;
 using System.IO;
 using Prism.Events;
-using PlagiarismDetectionApp.Services;
 
 namespace PlagiarismDetectionApp.ViewModels
 {
@@ -26,9 +25,8 @@ namespace PlagiarismDetectionApp.ViewModels
         private string nGramSize;
         private SnackbarMessageQueue _messageQueue;
 
-        public MainWindowViewModel(MainWindowModel model, IRegionManager regionManager, IEventAggregator eventAggregator)
+        public MainWindowViewModel(MainWindowModel model, IRegionManager regionManager)
         {
-            this.eventAggregator = eventAggregator;
             this.model = model;
             this.regionManager = regionManager;
             TextFieldFocusedCommand = new DelegateCommand(OpenFileBrowser);
@@ -87,17 +85,17 @@ namespace PlagiarismDetectionApp.ViewModels
         private void ExecuteAlgorithmHandler()
         {
             var textFilesToDeliver = GetNonEmptyTxTFilesExistsInFolder();
-            if (ValidateInputBoxes()) // && textFilesToDeliver.Any()
+            if (ValidateInputBoxes() && textFilesToDeliver.Any())
             {
                 var ngramAsInt = int.Parse(NGramSize);
                 var chunkSizeAsInt = int.Parse(SegmentChunkSize);
-                var eventArgs = new AlgorithmInvokedEventArgs();
-                eventArgs.NGramSize = ngramAsInt;
-                eventArgs.SegmentChunkSize = chunkSizeAsInt;
-                eventArgs.TextFiles = textFilesToDeliver;
 
-                regionManager.RequestNavigate("MainRegion", "AlgorithmView");
-                eventAggregator.GetEvent<AlgorithmInvokedEvent>().Publish(eventArgs);
+                var navParams = new NavigationParameters();
+                navParams.Add("NGramSize", ngramAsInt);
+                navParams.Add("ChunkSize", chunkSizeAsInt);
+                navParams.Add("TextFiles", textFilesToDeliver);
+
+                regionManager.RequestNavigate("MainRegion", "AlgorithmView", navParams);
             }
         }
 

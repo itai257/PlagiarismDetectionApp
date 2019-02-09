@@ -47,13 +47,16 @@ namespace PlagiarismDetectionApp
             Container.RegisterType<MainWindowView>("MainWindowView");
             Container.RegisterType<ResultsWindowView>("ResultsWindowView");
             Container.RegisterType<AlgorithmView>("AlgorithmView");
+            Container.RegisterType<ConfigurationsWindowView>("ConfigurationsWindowView");
             Container.RegisterTypeForNavigation<ResultsWindowView>();
             Container.RegisterTypeForNavigation<AboutView>();
             Container.RegisterTypeForNavigation<AlgorithmView>();
+            Container.RegisterTypeForNavigation<ConfigurationsWindowView>();
 
             //Others
             Container.RegisterType<MainWindowModel>(new ContainerControlledLifetimeManager());
             Container.RegisterType<AlgorithmViewModel>();
+            Container.RegisterType<SharedConfigurations>();
 
         }
     }

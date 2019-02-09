@@ -54,6 +54,12 @@
     <StartupObject>PlagiarismDetectionApp.App</StartupObject>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="LiveCharts, Version=0.9.7.0, Culture=neutral, PublicKeyToken=0bc1f845d1ebb8df, processorArchitecture=MSIL">
+      <HintPath>..\packages\LiveCharts.0.9.7\lib\net45\LiveCharts.dll</HintPath>
+    </Reference>
+    <Reference Include="LiveCharts.Wpf, Version=0.9.7.0, Culture=neutral, PublicKeyToken=0bc1f845d1ebb8df, processorArchitecture=MSIL">
+      <HintPath>..\packages\LiveCharts.Wpf.0.9.7\lib\net45\LiveCharts.Wpf.dll</HintPath>
+    </Reference>
     <Reference Include="MaterialDesignColors, Version=1.0.0.14576, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\MaterialDesignColors.1.1.1\lib\net45\MaterialDesignColors.dll</HintPath>
     </Reference>
@@ -132,9 +138,9 @@
     </ApplicationDefinition>
     <Compile Include="Models\CustomTabControl.cs" />
     <Compile Include="Models\MainWindowModel.cs" />
-    <Compile Include="Services\AlgorithmInvokedEvent.cs" />
-    <Compile Include="Services\AlgorithmInvokedEventArgs.cs" />
+    <Compile Include="Models\SharedConfigurations.cs" />
     <Compile Include="ViewModels\AlgorithmViewModel.cs" />
+    <Compile Include="ViewModels\ConfigurationsWindowViewModel.cs" />
     <Compile Include="Views\AboutView.xaml.cs">
       <DependentUpon>AboutView.xaml</DependentUpon>
     </Compile>
@@ -144,6 +150,9 @@
     <Compile Include="Views\AlgorithmView.xaml.cs">
       <DependentUpon>AlgorithmView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\ConfigurationsWindowView.xaml.cs">
+      <DependentUpon>ConfigurationsWindowView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\MainWindowView.xaml.cs">
       <DependentUpon>MainWindowView.xaml</DependentUpon>
     </Compile>
@@ -152,6 +161,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\AlgorithmView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ConfigurationsWindowView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

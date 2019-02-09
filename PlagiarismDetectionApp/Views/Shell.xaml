@@ -76,6 +76,13 @@
                             <TextBlock Margin="8 0 0 0" FontSize="18">ABOUT</TextBlock>
                         </StackPanel>
                     </Button>
+                    <Button Grid.Column="1"
+                         Command="{Binding ShowConfigurationsViewCommand}" Margin="131,18,20,17">
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon Kind="ShipWheel" VerticalAlignment="Center"/>
+                            <TextBlock Margin="8 0 0 0" FontSize="18">CONFIGURATIONS</TextBlock>
+                        </StackPanel>
+                    </Button>
                 </Grid>
             </StackPanel>
         </materialDesign:ColorZone>
